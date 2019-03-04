@@ -6,7 +6,7 @@ services:
     container_name: google-chrome-puppeteer
     volumes:
     # mount code and output directories into the container
-      - ./app:/app
+      - .:/app
     working_dir: /app
     shm_size: 1gb #512M
     # just run the container doing nothing
