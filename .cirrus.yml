@@ -1,8 +1,0 @@
-docker_builder:
-  only_if: $CIRRUS_TAG != ''
-  env:
-      DOCKER_USERNAME: ENCRYPTED[ca33aae5637dc87749b003aed1a215f28e3e75919d3f76d0d3ba09c92666bdc4952553566323fc0e4da280e65229719a]
-      DOCKER_PASSWORD: ENCRYPTED[f5bf5dd44a2f0b5ac356f71abcc7367f79f60803a3810931319c3f67aa4b873f48425caa1c178ccdc968b08c36fb9407]
-  build_script: docker build --tag gsjha/docker-google-puppeteer:$CIRRUS_TAG .
-  login_script: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-  push_script: docker push gsjha/docker-google-puppeteer:$CIRRUS_TAG
