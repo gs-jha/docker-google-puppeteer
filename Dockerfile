@@ -1,4 +1,4 @@
-FROM node:8-slim
+FROM node:10-slim
 
 RUN apt-get update \
     # See https://crbug.com/795759
@@ -25,17 +25,18 @@ RUN chmod +x /usr/local/bin/dumb-init
 #     browser.launch({executablePath: 'google-chrome-unstable'})
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
-# Install puppeteer so it's available in the container.
-RUN npm i puppeteer
-
 WORKDIR /app
+
+COPY . /app/
+
+# Install puppeteer so it's available in the container.
+RUN npm install
 
 # Add user so we don't need --no-sandbox.
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /app \
-    && chown -R pptruser:pptruser /node_modules
+    && chown -R pptruser:pptruser /app
 
 # Run everything after as non-privileged user.
 USER pptruser
